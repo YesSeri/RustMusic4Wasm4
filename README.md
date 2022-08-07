@@ -4,6 +4,10 @@ Music4Wasm4 lets you create your music in any program and then export it to wasm
 
 You can write your music in MuseScore, or any other program that exports to musicxml, non-compressed and run it and it will output rust wasm4 code in the console that you can copy paste.
 
+## Usage
+
+Download it and run it with `cargo run`. There is some example music I have written. `cargo run ./assets/xml-cello-violin-test.musicxml`. Test with them or use your own music.
+
 ## Beats
 
 The subbeat you have to supply depends on the fastest note you have in your music. If your music is in 3/4, three beats per bar, and you use semiquavers as the fastest note (4 notes per beat) then you will have 3 \* 4 = 12 subbeats per bar, from 0 up to 11.
@@ -47,10 +51,6 @@ fn music_player(counter: &mut u8) {
 You can't change beat from 3/4 to 4/4 or 6/8 or anything at all. The rhythm has to be the same all the way through.
 
 This of course needs to be fixed.
-
-## Usage/Examples
-
-Download it and run it with cargo run. There are some example music I have written. `cargo run ./assets/xml-cello-violin-test.musicxml`. Use them or your own music.
 
 ## Ideas
 

@@ -16,25 +16,29 @@ pub fn output_code(music: Vec<Vec<MusicInfo>>, voice: u8) {
         code += &format!("\nfn play_bar_{}_voice_{}(subbeat: u8){{\n", bar_idx, voice);
         code += "\tmatch subbeat {\n";
         let mut curr_beat = 0;
+
         for note in bar {
-            code += &format!("\t\t{} => {{", curr_beat);
+            code += &format!("\t\t{} => {{\n", curr_beat);
             curr_beat += note.duration;
 
             match &note.note {
                 Some(n) => {
-                    let hz: u32 = n.pitch.into();
+                    let hz = n.get_hz();
                     let string: String = n.pitch.into();
                     code += &format!(
-                        "\n\t\t\ttone({}, 30, 100, {}) // {}\n\t\t}}\n",
+                        "\t\t\ttone({}, 30, 100, {}) // {}\n\t\t}}\n",
                         hz, instrument, string
                     )
                     .to_string();
                 }
-                None => {}
+                None => {
+                    code += &format!("\n\t\t}}\n",).to_string();
+                }
             }
         }
+        code += &format!("\t\t_ => {{\n\t\t\t\n\t\t}}\n");
 
-        code += "\t}\n}\n"
+        code += "\t}\n}\n";
     }
     println!("{}", code);
 }
