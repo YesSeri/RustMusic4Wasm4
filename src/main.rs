@@ -11,6 +11,7 @@ use alter::Alter;
 use music_note::MusicNote;
 use parse_xml::{get_element_by_tag_name, get_measures, get_text_from_tag};
 use roxmltree::*;
+use std::env;
 use std::fs::File;
 use std::io::Read;
 
@@ -22,8 +23,11 @@ use std::io::Read;
 //   <duration>2</duration>
 // </note>
 fn main() {
-    let data = get_file_data("./assets/xml-one-bar-two-voices.musicxml").unwrap();
+    let args: Vec<String> = env::args().collect();
 
+    let file_name = &args[1];
+    // let data = get_file_data("./assets/xml-one-bar-two-voices.musicxml").unwrap();
+    let data = get_file_data(file_name).unwrap();
     let doc = Document::parse(&data).unwrap();
     let parts: Vec<Node> = doc
         .descendants()
